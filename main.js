@@ -1,19 +1,21 @@
-
-//cimport { CallingCard } from './CallingCard.js';
 const CallingCard = require('./CallingCard.js');
+const CellPhone = require('./CellPhone.js');
 
-let card1 = new CallingCard(10); // card1 costs 10 cents / minute to use
+let card = new CallingCard(20);
+card.addDollars(1); // add 100 cents @ 20 cents/minute = 5 minutes added
 
-let card2 = new CallingCard(15); // card2 costs 15 cents / minute to use
+let phone = new CellPhone(card);
+phone.call("555-1111");
+phone.tick();       // 1 minute elapsed
+phone.tick();       // 2 minutes elapsed
+phone.endCall();
 
-let card = new CallingCard(20); // this card costs 20 cents / minute to use
+phone.call("555-3333");
+phone.tick();       // 3 minutes elapsed
+phone.tick();       // 4 minutes elapsed
+phone.tick();       // this is the end of the 5th minute, so the call is ended
 
-card.addDollars(100);           // add $1 (100 cents).  100 cents / 20 cents/minute = 5 minutes added
+phone.getHistory(); // => returns "555-1111 (2 minutes), 555-3333 (cut of at 3 minutes)"
 
-console.log(card.getRemainingMinutes());   // returns 5  (5 minutes left)
-
-card.useMinutes(3);
-card.getRemainingMinutes();   // return 2
-
-card.useMinutes(1);
-card.getRemainingMinutes();   // returns 1
+card.getRemainingMinutes() // => returns 0, because all 5 minutes have been used up
+console.log(phone);
