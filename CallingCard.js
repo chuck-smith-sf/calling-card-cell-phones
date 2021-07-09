@@ -1,6 +1,4 @@
-
-
-module.export = class CallingCard {
+class CallingCard {
     constructor(centPerMinute) {
         this.centPerMinute = centPerMinute;
         this.money = 0;
@@ -9,17 +7,22 @@ module.export = class CallingCard {
 
     addDollars(money) {
         this.money += money;
+        let cents = 100 * money;
+        let time = Math.floor(cents / this.centPerMinute);
+        this.minutes += time;
     }
 
     getRemainingMinutes() {
+        if (this.minutes <= 0) {
+            this.minutes = 0;
+        }
         return this.minutes;
     }
 
     useMinutes(minutes) {
-        //add logic that will only return 0 if less that 0
         this.minutes -= minutes;
     }
 
+}
 
-
-};
+module.exports = CallingCard;
